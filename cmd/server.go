@@ -7,6 +7,7 @@ import (
 
 	"github.com/benbjohnson/clock"
 	devchallenge "github.com/devchallenge/stock-service/internal/grpcapi"
+	"github.com/devchallenge/stock-service/internal/orderbook"
 	"github.com/devchallenge/stock-service/internal/server"
 	"github.com/devchallenge/stock-service/internal/stock"
 	"github.com/devchallenge/stock-service/internal/util"
@@ -27,13 +28,23 @@ func ExecuteServer() error {
 		return fmt.Errorf("failed to listen via address=%s: %w", address, err)
 	}
 
-	log.Printf("Listening on address=%s", address)
+	log.Printf("listening on address=%s", address)
 
-	s := stock.New(clock.New(), &util.UUIDGen{})
+	engine := orderbook.New()
+	s := stock.New(clock.New(), &util.IDGenerator{}, engine)
+
 	serv := server.New(s)
+	defer serv.Stop()
 
 	grpcServer := grpc.NewServer()
+	defer grpcServer.Stop()
 	devchallenge.RegisterStockServer(grpcServer, serv)
 
-	return grpcServer.Serve(lis)
+	log.Print("serving GRPC")
+
+	if err := grpcServer.Serve(lis); err != nil {
+		return fmt.Errorf("failed to serve: %w", err)
+	}
+
+	return nil
 }

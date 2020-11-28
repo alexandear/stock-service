@@ -19,8 +19,13 @@ const (
 )
 
 type Order struct {
-	ID        string
+	ID        uint64
+	Symbol    string
 	CreatedAt time.Time
+	Side      OrderSide
+	Type      OrderType
+	Price     float64
+	Quantity  float64
 }
 
 type CreateOrderParams struct {
