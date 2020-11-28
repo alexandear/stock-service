@@ -14,6 +14,7 @@ FROM alpine
 COPY --from=build /usr/local/bin/ /usr/local/bin/
 
 ENV HOST 0.0.0.0
+ENV PORT 9090
 
 EXPOSE 9090
 

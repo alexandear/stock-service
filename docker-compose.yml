@@ -1,0 +1,7 @@
+version: "3.8"
+services:
+  stock-service:
+    build: .
+    image: stock-service
+    ports:
+      - "9090:9090"
