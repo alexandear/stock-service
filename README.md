@@ -2,7 +2,7 @@
 
 ## Getting started
 
-Run server with Compose:
+Run GRPC server with Compose on port 9090:
 
 ```shell
 docker-compose up
