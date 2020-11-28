@@ -8,8 +8,14 @@ github.com/Djarvur/go-err113
 github.com/Masterminds/semver
 # github.com/OpenPeeDeeP/depguard v1.0.1
 github.com/OpenPeeDeeP/depguard
+# github.com/benbjohnson/clock v1.1.0
+## explicit
+github.com/benbjohnson/clock
 # github.com/bombsimon/wsl/v3 v3.1.0
 github.com/bombsimon/wsl/v3
+# github.com/corpix/uarand v0.1.1
+## explicit
+github.com/corpix/uarand
 # github.com/daixiang0/gci v0.2.4
 github.com/daixiang0/gci/pkg/gci
 # github.com/davecgh/go-spew v1.1.1
@@ -52,6 +58,11 @@ github.com/gobwas/glob/util/runes
 github.com/gobwas/glob/util/strings
 # github.com/gofrs/flock v0.8.0
 github.com/gofrs/flock
+# github.com/golang/mock v1.3.1
+## explicit
+github.com/golang/mock/gomock
+github.com/golang/mock/mockgen
+github.com/golang/mock/mockgen/model
 # github.com/golang/protobuf v1.4.2
 ## explicit
 github.com/golang/protobuf/internal/gengogrpc
@@ -129,6 +140,9 @@ github.com/google/go-cmp/cmp/internal/diff
 github.com/google/go-cmp/cmp/internal/flags
 github.com/google/go-cmp/cmp/internal/function
 github.com/google/go-cmp/cmp/internal/value
+# github.com/google/uuid v1.0.0
+## explicit
+github.com/google/uuid
 # github.com/gostaticanalysis/analysisutil v0.1.0
 github.com/gostaticanalysis/analysisutil
 # github.com/gostaticanalysis/comment v1.3.0
@@ -145,6 +159,9 @@ github.com/hashicorp/hcl/hcl/token
 github.com/hashicorp/hcl/json/parser
 github.com/hashicorp/hcl/json/scanner
 github.com/hashicorp/hcl/json/token
+# github.com/icrowley/fake v0.0.0-20180203215853-4178557ae428
+## explicit
+github.com/icrowley/fake
 # github.com/inconshreveable/mousetrap v1.0.0
 github.com/inconshreveable/mousetrap
 # github.com/jgautheron/goconst v0.0.0-20201117150253-ccae5bf973f3
@@ -247,8 +264,10 @@ github.com/ssgreg/nlreturn/v2/pkg/nlreturn
 # github.com/stretchr/objx v0.1.1
 github.com/stretchr/objx
 # github.com/stretchr/testify v1.6.1
+## explicit
 github.com/stretchr/testify/assert
 github.com/stretchr/testify/mock
+github.com/stretchr/testify/require
 # github.com/subosito/gotenv v1.2.0
 github.com/subosito/gotenv
 # github.com/tdakkota/asciicheck v0.0.0-20200416190851-d7f85be797a2

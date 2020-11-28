@@ -3,6 +3,8 @@ PATH := $(MAKEFILE_PATH):$(PATH)
 
 export GOBIN := $(MAKEFILE_PATH)/bin
 
+PATH := $(GOBIN):$(PATH)
+
 .PHONY: all
 all: clean format build lint test docker
 
@@ -33,7 +35,13 @@ format:
 	@go fmt $(PKGS)
 
 .PHONY: generate
-generate: grpc
+generate: mock grpc
+
+.PHONY: mock
+mock:
+	@echo mock
+	@go install github.com/golang/mock/mockgen
+	@go generate ./...
 
 .PHONY: grpc
 grpc:
@@ -56,7 +64,7 @@ docker:
 .PHONY: docker-run
 docker-run:
 	@echo docker-run
-	@docker run --rm -p 80:80 -e PORT=80 $(IMAGE)
+	@docker run --rm -p 9090:9090 $(IMAGE)
 
 IMAGE_DEV = stock-service-dev
 

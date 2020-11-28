@@ -36,3 +36,6 @@ issues:
     - linters:
         - lll
       source: "^//go:generate "
+    - linters:
+        - exhaustivestruct
+      path: "internal/server/server.go"
