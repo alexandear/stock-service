@@ -22,13 +22,13 @@ func TestServer_CreateOrder(t *testing.T) {
 		gctrl := gomock.NewController(t)
 		defer gctrl.Finish()
 		cm := clock.NewMock()
-		um := mock.NewMockIDGen(gctrl)
-		s := stock.New(cm, um, orderbook.New())
+		im := mock.NewMockIDer(gctrl)
+		s := stock.New(cm, im, orderbook.New())
 		serv := server.New(s)
 		now := time.Now().UTC()
 		cm.Set(now)
 		id := uint64(1)
-		um.EXPECT().New().Return(id).Times(1)
+		im.EXPECT().ID().Return(id).Times(1)
 
 		resp, err := serv.CreateOrder(context.Background(), &devchallenge.CreateOrderRequest{
 			Symbol:   fake.CharactersN(4),
@@ -51,13 +51,13 @@ func TestServer_CreateOrder(t *testing.T) {
 		gctrl := gomock.NewController(t)
 		defer gctrl.Finish()
 		cm := clock.NewMock()
-		um := mock.NewMockIDGen(gctrl)
-		s := stock.New(cm, um, orderbook.New())
+		im := mock.NewMockIDer(gctrl)
+		s := stock.New(cm, im, orderbook.New())
 		serv := server.New(s)
 		now := time.Now().UTC()
 		cm.Set(now)
 		id := uint64(1)
-		um.EXPECT().New().Return(id).Times(1)
+		im.EXPECT().ID().Return(id).Times(1)
 
 		resp, err := serv.CreateOrder(context.Background(), &devchallenge.CreateOrderRequest{
 			Symbol:   fake.CharactersN(4),
@@ -102,15 +102,15 @@ func TestServer_CancelOrder(t *testing.T) {
 		gctrl := gomock.NewController(t)
 		defer gctrl.Finish()
 		cm := clock.NewMock()
-		um := mock.NewMockIDGen(gctrl)
+		im := mock.NewMockIDer(gctrl)
 		engine := orderbook.New()
-		s := stock.New(cm, um, engine)
+		s := stock.New(cm, im, engine)
 		serv := server.New(s)
 		now := time.Now().UTC()
 		cm.Set(now)
 		id := uint64(100)
 		symbol := fake.CharactersN(4)
-		um.EXPECT().New().Return(id).Times(1)
+		im.EXPECT().ID().Return(id).Times(1)
 		_, err := serv.CreateOrder(context.Background(), &devchallenge.CreateOrderRequest{
 			Symbol:   symbol,
 			Side:     devchallenge.OrderSide_BUY,
@@ -160,17 +160,17 @@ func TestServer_GetOrderBook(t *testing.T) {
 	gctrl := gomock.NewController(t)
 	defer gctrl.Finish()
 	cm := clock.NewMock()
-	um := mock.NewMockIDGen(gctrl)
+	im := mock.NewMockIDer(gctrl)
 	engine := orderbook.New()
-	s := stock.New(cm, um, engine)
+	s := stock.New(cm, im, engine)
 	serv := server.New(s)
 	now := time.Now().UTC()
 	cm.Set(now)
 	symbol := fake.CharactersN(4)
-	um.EXPECT().New().Return(uint64(1)).Times(1)
-	um.EXPECT().New().Return(uint64(2)).Times(1)
-	um.EXPECT().New().Return(uint64(3)).Times(1)
-	um.EXPECT().New().Return(uint64(4)).Times(1)
+	im.EXPECT().ID().Return(uint64(1)).Times(1)
+	im.EXPECT().ID().Return(uint64(2)).Times(1)
+	im.EXPECT().ID().Return(uint64(3)).Times(1)
+	im.EXPECT().ID().Return(uint64(4)).Times(1)
 	_, err := serv.CreateOrder(context.Background(), &devchallenge.CreateOrderRequest{
 		Symbol:   symbol,
 		Side:     devchallenge.OrderSide_BUY,

@@ -15,8 +15,8 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-type IDGen interface {
-	New() uint64
+type IDer interface {
+	ID() uint64
 }
 
 //go:generate mockgen -source=$GOFILE -package mock -destination mock/interfaces.go
@@ -26,7 +26,7 @@ const (
 )
 
 type Service struct {
-	idGen  IDGen
+	id     IDer
 	clock  clock.Clock
 	engine *orderbook.Engine
 
@@ -38,9 +38,9 @@ type Service struct {
 	matchOrders map[uint64]model.Order
 }
 
-func New(clock clock.Clock, idGen IDGen, engine *orderbook.Engine) *Service {
+func New(clock clock.Clock, id IDer, engine *orderbook.Engine) *Service {
 	s := &Service{
-		idGen:  idGen,
+		id:     id,
 		clock:  clock,
 		engine: engine,
 	}
@@ -89,7 +89,7 @@ func (s *Service) CreateOrder(ctx context.Context, params model.CreateOrderParam
 		return model.Order{}, model.ErrNotValidQuantity
 	}
 
-	id := s.idGen.New()
+	id := s.id.ID()
 	order := model.Order{
 		ID:        id,
 		Symbol:    params.Symbol,

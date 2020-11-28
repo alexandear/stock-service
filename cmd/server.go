@@ -7,10 +7,10 @@ import (
 
 	"github.com/benbjohnson/clock"
 	devchallenge "github.com/devchallenge/stock-service/internal/grpcapi"
+	"github.com/devchallenge/stock-service/internal/id"
 	"github.com/devchallenge/stock-service/internal/orderbook"
 	"github.com/devchallenge/stock-service/internal/server"
 	"github.com/devchallenge/stock-service/internal/stock"
-	"github.com/devchallenge/stock-service/internal/util"
 	"github.com/spf13/pflag"
 	"google.golang.org/grpc"
 )
@@ -31,7 +31,7 @@ func ExecuteServer() error {
 	log.Printf("listening on address=%s", address)
 
 	engine := orderbook.New()
-	s := stock.New(clock.New(), &util.IDGenerator{}, engine)
+	s := stock.New(clock.New(), &id.Gen{}, engine)
 
 	serv := server.New(s)
 	defer serv.Stop()

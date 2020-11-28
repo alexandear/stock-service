@@ -9,39 +9,39 @@ import (
 	reflect "reflect"
 )
 
-// MockIDGen is a mock of IDGen interface
-type MockIDGen struct {
+// MockIDer is a mock of IDer interface
+type MockIDer struct {
 	ctrl     *gomock.Controller
-	recorder *MockIDGenMockRecorder
+	recorder *MockIDerMockRecorder
 }
 
-// MockIDGenMockRecorder is the mock recorder for MockIDGen
-type MockIDGenMockRecorder struct {
-	mock *MockIDGen
+// MockIDerMockRecorder is the mock recorder for MockIDer
+type MockIDerMockRecorder struct {
+	mock *MockIDer
 }
 
-// NewMockIDGen creates a new mock instance
-func NewMockIDGen(ctrl *gomock.Controller) *MockIDGen {
-	mock := &MockIDGen{ctrl: ctrl}
-	mock.recorder = &MockIDGenMockRecorder{mock}
+// NewMockIDer creates a new mock instance
+func NewMockIDer(ctrl *gomock.Controller) *MockIDer {
+	mock := &MockIDer{ctrl: ctrl}
+	mock.recorder = &MockIDerMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use
-func (m *MockIDGen) EXPECT() *MockIDGenMockRecorder {
+func (m *MockIDer) EXPECT() *MockIDerMockRecorder {
 	return m.recorder
 }
 
-// New mocks base method
-func (m *MockIDGen) New() uint64 {
+// ID mocks base method
+func (m *MockIDer) ID() uint64 {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "New")
+	ret := m.ctrl.Call(m, "ID")
 	ret0, _ := ret[0].(uint64)
 	return ret0
 }
 
-// New indicates an expected call of New
-func (mr *MockIDGenMockRecorder) New() *gomock.Call {
+// ID indicates an expected call of ID
+func (mr *MockIDerMockRecorder) ID() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "New", reflect.TypeOf((*MockIDGen)(nil).New))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ID", reflect.TypeOf((*MockIDer)(nil).ID))
 }
