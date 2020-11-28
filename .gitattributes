@@ -1,0 +1,2 @@
+vendor/** -diff
+internal/grpcapi/** -diff
