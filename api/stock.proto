@@ -1,0 +1,106 @@
+syntax = "proto3";
+
+package devchallenge;
+
+enum OrderSide {
+    UNKNOWN_SIDE = 0;
+    BUY = 1;
+    SELL = 2;
+}
+
+enum OrderType {
+    UNKNOWN_TYPE = 0;
+    LIMIT = 1;
+    MARKET = 2;
+}
+
+enum ResponseStatus {
+    UNKNOWN_STATUS = 0;
+    SUCCESS = 1;
+    FAILED = 2;
+}
+
+// The stock service definition.
+service Stock {
+    rpc CreateOrder (CreateOrderRequest) returns (CreateOrderResponse) {}
+    rpc CancelOrder (CancelOrderRequest) returns (CancelOrderResponse) {}
+    rpc GetOrderBook (GetOrderBookRequest) returns (GetOrderBookResponse) {}
+    rpc GetTrades(GetTradesRequest) returns (GetTradesResponse) {}
+    rpc GetStats(GetStatsRequest) returns (GetStatsResponse) {}
+}
+
+// New order
+message CreateOrderRequest {
+    string symbol = 1;         // "TSLA"
+    OrderSide side = 2;        // BUY
+    OrderType type = 3;        // LIMIT
+    string price = 4;          // "100.25" (required only for LIMIT orders, for MARKET order should be empty)
+    string quantity = 5;       // "15.5"
+}
+
+message CreateOrderResponse {
+    ResponseStatus status = 1; // SUCCESS or FAILED
+    string message = 2;        // "OK" or "Not valid price"
+    string id = 3;             // "d64cb50a-9b36-457b-8927-dcae53126a41" or "12345678"
+    uint64 time = 4;           // 1606481443502
+}
+
+// Cancel order
+message CancelOrderRequest {
+    string symbol = 1;         // "TSLA"
+    string id = 2;             // "d64cb50a-9b36-457b-8927-dcae53126a41" or "12345678"
+}
+
+message CancelOrderResponse {
+    ResponseStatus status = 1; // SUCCESS or FAILED
+    string message = 2;        // "OK" or "Order not found"
+    uint64 time = 3;           // 1606481443502
+}
+
+// Get order book
+message GetOrderBookRequest {
+    string symbol = 1;         // "TSLA"
+    int32 limit = 2;           // 50
+}
+
+message GetOrderBookResponse {
+    repeated OrderBookEntity bids = 1;
+    repeated OrderBookEntity asks = 2;
+    uint64 time = 3;           // 1606481443502
+}
+
+message OrderBookEntity {
+    string price = 1;          // "574.24"
+    string quantity = 2;       // "18.58"
+}
+
+// Get trades history (list of executed orders)
+message GetTradesRequest {
+    string symbol = 1;         // "TSLA"
+    int32 limit = 2;           // 50
+    uint64 from_time = 3;      // 1606481443502 (optional parameter to fetch from the specific timestamp, default gets most recent trades)
+}
+
+message GetTradesResponse {
+    repeated TradeEntity trades = 1;
+    uint64 time = 2;           // 1606481443502
+}
+
+message TradeEntity {
+    string symbol = 1;         // "TSLA"
+    string orderId = 2;        // "d64cb50a-9b36-457b-8927-dcae53126a41" or "12345678"
+    string price = 3;          // "100.25"
+    string quantity = 4;       // "15.5"
+    uint64 time = 5;           // 1606481443502
+}
+
+// Get stats of stock
+message GetStatsRequest {
+    string symbol = 1;         // "TSLA"
+}
+
+message GetStatsResponse {
+    string volume = 1;         // "246345.44"
+    string commission = 2;     // "128.55"
+    uint64 time = 3;           // 1606481443502
+}
